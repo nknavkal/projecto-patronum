@@ -1,0 +1,33 @@
+partII:
+  20_0: ['Oisin', 'Daragh', 'Paris', 'Ruben', 'Skylar', 'Lianne', 'Mckenna', 'Wesley', 'Pam', 'Joni', 'Gene', 'Dominick', 'Ayesha', 'Chase', 'Curt', 'Carla', 'Amari', 'Janette', 'Conner', 'Neal']
+  20_1: ['Martin', 'Bobbie', 'Matthew', 'Mindy', 'Trinity', 'Ethel', 'Juan', 'Nevaeh', 'Angus', 'Lillian', 'Alfonso', 'Daphne', 'Elyza', 'Darragh', 'Alfie', 'Marty', 'Lonnie', 'Emerald', 'Roberto', 'Holden']
+  20_2: ['Janet', 'Javier', 'Krista', 'Bert', 'Sidney', 'Cristian', 'Alexis', 'Cindy', 'Carlos', 'Jocelyn', 'Johnny', 'Guillermo', 'Cora', 'Kim', 'Caitlyn', 'Kay', 'Kylee', 'Kirsten', 'Brooklyn', 'Vihan']
+  20_3: ['Joselyn', 'Adan', 'Angel', 'Prince', 'Marquis', 'Brayan', 'Gregg', 'Logan', 'Kiera', 'Amir', 'Jonah', 'Aubrey', 'Rylie', 'Zoey', 'Ron', 'Tamara', 'Caroline', 'Emma', 'Faith', 'Debra']
+  20_4: ['Tiana', 'Wilson', 'Carissa', 'Molly', 'Yvaine', 'Shawn', 'Terrence', 'Nickolas', 'Katelynn', 'Beau', 'Duke', 'Gwendolyn', 'Ayanna', 'Kelli', 'Luther', 'Anne', 'Whitney', 'Kiley', 'Petar', 'Mario']
+  20_5: ['Leslie', 'Zoey', 'Kathryn', 'Maritza', 'Lara', 'Shawna', 'Alvin', 'Sterling', 'Marcella', 'Dane', 'Susanne', 'Bruce', 'Rashan', 'Caitlyn', 'Vihan', 'Deidre', 'Pandora', 'Cian', 'Gustavo', 'Perla']
+  20_6: ['Isaiah', 'Liza', 'Angel', 'Corbin', 'Marissa', 'Arianna', 'Hugh', 'Mickey', 'Michaela', 'Diego', 'Mariah', 'Uriel', 'Erika', 'Jason', 'Vijay', 'Stacy', 'Brad', 'Al', 'Tahlia', 'Callie']
+  20_7: ['Adrianna', 'Maximus', 'Angelo', 'Juanita', 'Deirdre', 'Daren', 'Peyton', 'Beatrice', 'Raven', 'Amy', 'Kierra', 'Maggie', 'Lisa', 'Carrie', 'Brad', 'Brenda', 'Xaviera', 'Jordyn', 'Dennis', 'Kristi']
+  20_8: ['Kendrick', 'Cheri', 'Elliott', 'Brandon', 'Megan', 'Dee', 'Jeannine', 'Kieran', 'Sharon', 'Bobbie', 'Andrea', 'Michael', 'Aden', 'Dante', 'Anna', 'Linda', 'Alejandra', 'Wyatt', 'Emiliano', 'Perry']
+  20_9: ['Lonnie', 'Archie', 'Robin', 'Derek', 'Iris', 'Tatiana', 'Finley', 'Michaela', 'Hunter', 'Madisyn', 'Alex', 'Irma', 'Nishka', 'Moises', 'Abel', 'Lester', 'Cam', 'Todd', 'Manuel', 'Drew']
+
+  35_0: ['Jade', 'Nasir', 'Claudia', 'Toni', 'Stewart', 'Andy', 'Cathy', 'Eimear', 'Kiley', 'Ali', 'Theodore', 'Rylee', 'Dexter', 'Stanley', 'Lorri', 'Rena', 'Tracey', 'Jai', 'Lynn', 'Trenton', 'Lorenzo', 'Roxanne', 'Alice', 'Jason', 'Skylar', 'Vince', 'Kathy', 'Bruno', 'Damien', 'Martha', 'Elliott', 'Alexandra', 'Lillian', 'Katherine', 'Brent']
+  35_1: ['Isaiah', 'Lucas', 'Stella', 'Jamie', 'Jett', 'Kristi', 'Jacob', 'Zelida', 'Bailey', 'Zoey', 'Annika', 'Patti', 'Angelina', 'Alanna', 'Hope', 'Rose', 'Lee', 'Desiree', 'Isaac', 'Rochelle', 'Erika', 'Leslie', 'Kellie', 'Gwen', 'Callie', 'Phyllis', 'Parker', 'Tod', 'Anthony', 'Ellen', 'Makenna', 'Kim', 'Marlene', 'Layla', 'Dana']
+  35_2: ['Kiana', 'Skyler', 'Derrick', 'Ramona', 'Zara', 'Randal', 'Gloria', 'Dianne', 'Donna', 'Aiden', 'Debbie', 'Fernando', 'Bert', 'Lauren', 'Sheryl', 'Terrence', 'Mat', 'Fiona', 'Kim', 'Alisa', 'Eve', 'Denis', 'Robin', 'Lucy', 'Toni', 'Hazel', 'Stewart', 'Jodi', 'Frances', 'Yasmine', 'Gary', 'Derek', 'Cecilia', 'Ingrid', 'Janelle']
+  35_3: ['Olivia', 'Nayeli', 'Ayden', 'Jeff', 'Joselyn', 'Javon', 'Shawnette', 'Bart', 'Eva', 'Alayna', 'Marybeth', 'Gwendolyn', 'Vonda', 'June', 'Cesar', 'Dino', 'Kari', 'Seth', 'Deena', 'Monty', 'Kailey', 'Ira', 'Chris', 'Emily', 'Cora', 'Freya', 'Clayton', 'Makenna', 'Harley', 'Kiera', 'Ewan', 'Zeb', 'Irene', 'Duke', 'Kelly']
+  35_4: ['Johnathon', 'Marlene', 'Sherman', 'Kale', 'Denise', 'Braden', 'Damien', 'Lorri', 'Patricia', 'Madeleine', 'Annette', 'Kristen', 'Skyler', 'Al', 'Kobe', 'Jamie', 'Vaughn', 'Corbin', 'Payton', 'Darwin', 'Claire', 'Eoghan', 'Cory', 'Zebulon', 'Gregg', 'Leila', 'Cathy', 'Monty', 'Rudy', 'Luann', 'Jacqueline', 'Heather', 'Clay', 'Natasha', 'Devin']
+  35_5: ['Pandora', 'Kobe', 'Darrin', 'Jonathon', 'Kathleen', 'Kassidy', 'Cooper', 'Braydon', 'Dalton', 'Elaine', 'Ysabel', 'Orlaith', 'Kolby', 'Monte', 'Asia', 'Easton', 'Eliza', 'Sherrie', 'Zoe', 'Maisie', 'Irving', 'Colton', 'Sophia', 'Claire', 'Marissa', 'Chelsea', 'Frederick', 'Raquel', 'Braxton', 'Dee', 'Jediah', 'Karyn', 'Ross', 'Jeff', 'Patrice']
+  35_6: ['Bonita', 'Alice', 'Adriana', 'Greg', 'Corbin', 'Julio', 'Tara', 'Bart', 'Ira', 'Levi', 'Stacey', 'Darragh', 'Eloise', 'Cierra', 'Belinda', 'Molly', 'Maximilian', 'Albert', 'Glenn', 'Phyllis', 'Marilyn', 'Sheila', 'Daniel', 'Shane', 'Kendra', 'Weston', 'Yasmine', 'Larissa', 'Izabella', 'Debora', 'Ezra', 'Mekhi', 'Gladys', 'Kobe', 'Clint']
+  35_7: ['Erica', 'Mariah', 'Eddie', 'Bobbi', 'Isaac', 'Joan', 'Carter', 'Corey', 'Bryson', 'Conor', 'Monty', 'Febian', 'Carolina', 'Luke', 'Paul', 'Lynnette', 'Ayanna', 'Mia', 'Bradwin', 'Lianne', 'Marina', 'Donovan', 'Martin', 'Joni', 'Brooke', 'Teddy', 'Felix', 'Melinda', 'Quinn', 'Michael', 'Ayesha', 'Salvador', 'Tegan', 'Seb', 'Karla']
+  35_8: ['Luke', 'Nishka', 'Mikaela', 'Kelly', 'Tracy', 'Caitlyn', 'Kara', 'Tristan', 'Kenny', 'Brennan', 'Rashan', 'Patty', 'Bill', 'Tonia', 'Delaney', 'Clint', 'Ruben', 'Dick', 'Lorna', 'Jeffry', 'Billie', 'Josie', 'Solomon', 'Reid', 'Roberta', 'Oliver', 'Will', 'Rose', 'Monica', 'Joanna', 'Chad', 'Johnathan', 'Jerry', 'Kiana', 'Jillian']
+  35_9: ['Maximilian', 'Gena', 'Clay', 'Penny', 'Caleb', 'Travis', 'Jensen', 'Braydon', 'Mikaela', 'Alexus', 'Dorian', 'Rosalind', 'Dane', 'Dakota', 'Everett', 'Cedric', 'Martha', 'Lara', 'Alina', 'Allan', 'Brenna', 'Quiana', 'Jonah', 'Brooke', 'Sheryl', 'Chance', 'Ashleigh', 'Alexia', 'Lewis', 'Mallory', 'Mollie', 'Ashlyn', 'Kelley', 'Kaitlyn', 'Janine']
+
+  50_0:
+  50_1:
+  50_2:
+  50_3:
+  50_4:
+  50_5:
+  50_6:
+  50_7:
+  50_8:
+  50_9:
