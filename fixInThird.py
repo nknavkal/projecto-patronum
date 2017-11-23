@@ -33,7 +33,7 @@ def addWizz(constraints, ordering, wizzMap, wizzNames, wizzToAdd, inThird):
     wizzNames.remove(wizzToAdd)
     removed = set()
     recentDeps = []
-    inThird_removed = inThird[wizzToAdd]
+    inThird_removed = inThird.pop(wizzToAdd)
     i = 0
     while i < len(constraints):
         cons = constraints[i]
@@ -41,14 +41,16 @@ def addWizz(constraints, ordering, wizzMap, wizzNames, wizzToAdd, inThird):
             #if its in the 3rd space, constraint satisfied. If not, add it to dependencies, satisfy it later
             removed.add(cons)
             constraints.remove(cons)
-            inThird[cons[0]] -= 1
-            inThird[cons[1]] -= 1
-            inThird[cons[2]] -= 1
+            
+            
+            
             if cons[1] == wizzToAdd or cons[0] == wizzToAdd:
                 if cons[1] != wizzToAdd:
                     wizzMap[cons[2]].addDep(cons[1])
+		    inThird[cons[1]] -= 1
                 else:
                     wizzMap[cons[2]].addDep(cons[0])
+		    inThird[cons[0]] -= 1
                 recentDeps.append(cons[2])
         else:
             i+=1
@@ -72,12 +74,10 @@ def addWizz(constraints, ordering, wizzMap, wizzNames, wizzToAdd, inThird):
         ordering.pop()
         for cons in removed:
             constraints.append(cons)
-            inThird[cons[0]] += 1
-            inThird[cons[1]] += 1
-            inThird[cons[2]] += 1
         wizzNames.add(wizzToAdd)
         for wizz in recentDeps:
-            wizzMap[wizz].removeLastDep()
+            inThird[wizzMap[wizz].removeLastDep()] += 1
+	inThird[wizzToAdd] = inThird_removed
     return ret
 
 def getWizzNames(constraints, numNames):
@@ -127,9 +127,9 @@ class Wizzrobe:
         self.deps.append(otherWizz)
         self.numDeps += 1
     def removeLastDep(self):
-        self.deps.pop()
         self.numDeps -= 1
-
+	return self.deps.pop()
+        
 
 
 
