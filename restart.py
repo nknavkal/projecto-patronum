@@ -39,7 +39,7 @@ def loopOnce(guess, constraints, wizzNames):
 		     break
             guess[j], guess[iLocation] = guess[iLocation], guess[j]
 	guess[bestIndex], guess[iLocation] = i, guess[bestIndex]
-    return guess
+    return tester(guess, constraints)
 
 def swapTest(guess, constraints, i, j):
     guess[j], guess[i] = guess[i], guess[j]
@@ -47,31 +47,24 @@ def swapTest(guess, constraints, i, j):
     guess[j], guess[i] = guess[i], guess[j]
     return k
 
-def loopWithProb(guess, constraints):
+def loopWithProb(guess, constraints, temp):
     origSat = tester(guess, constraints)
-    numTrys = len(constraints) / 100
-    repeats = []
-    changeInSat = {}
-    for _ in range(numTrys):
-	a = randint(0,len(guess)-1)
-        b = randint(0,len(guess)-1)
-        satisfiedAfterSwapping = swapTest(guess, constraints, a, b)
-        changeInSat[(a,b)] = satisfiedAfterSwapping - origSat
-    makeProbs(changeInSat)
-    for swap, sat in changeInSat.items():
-	for i in range(sat):
-	    repeats.append(swap)
-    selected = choice(repeats)
-    guess[selected[0]], guess[selected[1]] = guess[selected[1]], guess[selected[0]]
-    return tester(guess, constraints)
+   
+    a = randint(0,len(guess)-1)
+    b = randint(0,len(guess)-1)
 
-def makeProbs(changeInSat):
-    smallest = abs(min(changeInSat.values()))
-    for a,b in changeInSat.items():
-	changeInSat[a] = (b + smallest) * (b + smallest)
-    return changeInSat
+    satisfiedAfterSwapping = swapTest(guess, constraints, a, b)
 
-	
+    if satisfiedAfterSwapping > origSat:
+	guess[a], guess[b] = guess[b], guess[a]
+	temp[0] = temp[0] * .999
+    else:
+	prob = exp((satisfiedAfterSwapping - origSat) * 1.0 / temp[0])
+	x = random()
+	if x < prob:
+	    guess[a], guess[b] = guess[b], guess[a]
+	    temp[0] = temp[0] * .999
+    return tester(guess, constraints)	
 
 
 def getWizzNames(constraints, numNames):
@@ -105,32 +98,17 @@ def main(fileName):
     inThird = getThirds(constraints, wizzNames)
     
     ret = startingOrder(inThird)
-    for _ in range(4):
-	loopOnce(ret, constraints, wizzNames)
-    while loopWithProb(ret, constraints) < len(constraints):
-	print(loopWithProb(ret, constraints))
+    #for _ in range(2):
+	#print(loopOnce(ret, constraints, wizzNames))
+    temp = []
+    temp.append(1)
+    while loopWithProb(ret, constraints, temp) < len(constraints):
+	print(loopWithProb(ret, constraints, temp))
     
 
     print(ret)
     #print("--- %s seconds ---" % (time.time() - start_time))
     print((tester(ret, safety)))
-
-
-
-def findFailed(guess, constraints):
-    #guess is an array
-    wrong = []
-    for constraint in constraints:
-        first = constraint[0]
-        second = constraint[1]
-        third = constraint[2]
-        lower = min(guess.index(first), guess.index(second))
-        upper = max(guess.index(first), guess.index(second))
-        if guess.index(third) < lower or guess.index(third) > upper:
-            pass
-	else:
-	    wrong.append(constraint)
-    return wrong
 
 
 
