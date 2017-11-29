@@ -66,8 +66,9 @@ def loopWithProb(guess, constraints):
     return tester(guess, constraints)
 
 def makeProbs(changeInSat):
+    smallest = abs(min(changeInSat.values()))
     for a,b in changeInSat.items():
-	changeInSat[a] = abs(b)
+	changeInSat[a] = (b + smallest) * (b + smallest)
     return changeInSat
 
 	
@@ -104,6 +105,8 @@ def main(fileName):
     inThird = getThirds(constraints, wizzNames)
     
     ret = startingOrder(inThird)
+    for _ in range(4):
+	loopOnce(ret, constraints, wizzNames)
     while loopWithProb(ret, constraints) < len(constraints):
 	print(loopWithProb(ret, constraints))
     
