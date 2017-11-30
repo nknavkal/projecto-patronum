@@ -1,5 +1,7 @@
-from random import *
+import random
 from math import *
+from datetime import datetime
+random.seed(datetime.now())
 def readFile(inputFile):
     fileobj = open(inputFile, "r")
     a = list(fileobj)
@@ -50,21 +52,36 @@ def swapTest(guess, constraints, i, j):
 def loopWithProb(guess, constraints, temp):
     origSat = tester(guess, constraints)
    
-    a = randint(0,len(guess)-1)
-    b = randint(0,len(guess)-1)
+    a = random.randint(0,len(guess)-1)
+    b = random.randint(0,len(guess)-1)
 
     satisfiedAfterSwapping = swapTest(guess, constraints, a, b)
 
     if satisfiedAfterSwapping > origSat:
 	guess[a], guess[b] = guess[b], guess[a]
-	temp[0] = temp[0] * .999
+	print(tester(guess, constraints), temp[0])
+	if temp[0] > .1:
+            temp[0] *= .999
+	else:
+	    temp[0] = .3
+        #temp[0] = (len(constraints) - tester(guess, constraints))*1.0/len(constraints)
+		
     else:
 	prob = exp((satisfiedAfterSwapping - origSat) * 1.0 / temp[0])
-	x = random()
+	x = random.random()
 	if x < prob:
 	    guess[a], guess[b] = guess[b], guess[a]
-	    temp[0] = temp[0] * .999
-    return tester(guess, constraints)	
+            print(tester(guess, constraints), temp[0])	
+	    if temp[0] > .1:
+                temp[0] *= .999
+	    else:
+                temp[0] = .3
+	    #temp[0] = (len(constraints) - tester(guess, constraints))*1.0/len(constraints)
+	    
+	else:
+	    print("-")
+    return tester(guess, constraints)
+    
 
 
 def getWizzNames(constraints, numNames):
@@ -98,12 +115,12 @@ def main(fileName):
     inThird = getThirds(constraints, wizzNames)
     
     ret = startingOrder(inThird)
-    #for _ in range(2):
-	#print(loopOnce(ret, constraints, wizzNames))
+    for _ in range(2):
+	print(loopOnce(ret, constraints, wizzNames))
     temp = []
     temp.append(1)
     while loopWithProb(ret, constraints, temp) < len(constraints):
-	print(loopWithProb(ret, constraints, temp))
+	pass
     
 
     print(ret)
