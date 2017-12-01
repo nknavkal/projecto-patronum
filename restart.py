@@ -133,7 +133,7 @@ def main(fileName):
 
     print(ret)
     #print("--- %s seconds ---" % (time.time() - start_time))
-    print((tester(ret, safety)))
+    print((tester(ret, safety))) 
 
 
 
