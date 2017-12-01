@@ -49,13 +49,16 @@ def swapTest(guess, constraints, i, j):
     guess[j], guess[i] = guess[i], guess[j]
     return k
 
-def loopWithProb(guess, constraints, temp):
+def loopWithProb_iterwizz(guess, constraints, temp):
     unSat = tester(guess, constraints)
-    #a = random.randint(0,len(guess)-1)
-    #b = random.randint(0,len(guess)-1)
+    a = random.randint(0,len(guess)-1)
+    b = random.randint(0,len(guess)-1)
     ###################
-    unsat_cho
-    aList = []
+    unSat_choice = random.sample(tester, 1)
+    a, b, c = unSat_choice[0], unSat_choice[1], unSat_choice[2]
+    aDict = {}
+    aDict[(c, a)] = swapTest(guess, constraints, c, a)
+    aDict[(c, b)] = swapTest(guess, constraints, c, b)
     for i in range (4):
         a = random.randint(0,len(guess)-1)
         b = random.randint(0,len(guess)-1)
@@ -68,7 +71,7 @@ def loopWithProb(guess, constraints, temp):
                 temp[0] *= .998
             else:
                 temp[0] = .3
-            #temp[0] = (len(constraints) - tester(guess, constraints))*1.0/len(constraints)
+            #temp[0] = (len(constraints) - tester(guess, constraints))*1.0/len(c[onstraints)
 
         else:
             prob = exp((value - origSat) * 0.99 / temp[0])
@@ -89,7 +92,40 @@ def loopWithProb(guess, constraints, temp):
 
 #####################
 
+def loopWithProb(guess, constraints, temp):
+    unSat = tester(guess, constraints)
+    #a = random.randint(0,len(guess)-1)
+    #b = random.randint(0,len(guess)-1)
+    ###################
+    unSat_choice = random.choice(unSat)
+    a, b, c = guess.index(unSat_choice[0]), guess.index(unSat_choice[1]),guess.index(unSat_choice[2])
+    aDict = {}
+    aDict[(c, a)] = swapTest(guess, constraints, c, a)
+    aDict[(c, b)] = swapTest(guess, constraints, c, b)
+    for key, value in sorted(iter(aDict.items()), key=lambda k_v1: (k_v1[1],k_v1[0]), reverse = True):
+        if value > origSat:
+            guess[key[0]], guess[key[1]] = guess[key[1]], guess[key[0]]
+            #print(len(constraints) - len(tester(guess, constraints)), temp[0])
+            if temp[0] > .1:
+                temp[0] *= .998
+            else:
+                temp[0] = .3
+            #temp[0] = (len(constraints) - tester(guess, constraints))*1.0/len(c[onstraints)
 
+        else:
+            prob = exp((value - origSat) * 0.99 / temp[0])
+            x = random.random()
+            if x < prob:
+                guess[key[0]], guess[key[1]] = guess[key[1]], guess[key[0]]
+                #print(tester(guess, constraints), temp[0])
+                if temp[0] > .1:
+                    temp[0] *= .998
+                else:
+                    temp[0] = .3
+                #temp[0] = (len(constraints) - tester(guess, constraints))*1.0/len(constraints)
+            else:
+                print("-")
+        return len(constraints) - len(tester(guess, constraints))
 
 
 def getWizzNames(constraints, numNames):
@@ -133,7 +169,7 @@ def main(fileName):
 
     print(ret)
     #print("--- %s seconds ---" % (time.time() - start_time))
-    print((tester(ret, safety)))
+    #print((tester(ret, safety)))
 
 
 
