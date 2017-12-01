@@ -37,10 +37,10 @@ def loopOnce(guess, constraints, wizzNames):
             if k > bestCorrect:
                 bestCorrect = k
                 bestIndex = j
-		if k == len(constraints):
-		     break
+                if k == len(constraints):
+                    break
             guess[j], guess[iLocation] = guess[iLocation], guess[j]
-	guess[bestIndex], guess[iLocation] = i, guess[bestIndex]
+        guess[bestIndex], guess[iLocation] = i, guess[bestIndex]
     return tester(guess, constraints)
 
 def swapTest(guess, constraints, i, j):
@@ -51,37 +51,45 @@ def swapTest(guess, constraints, i, j):
 
 def loopWithProb(guess, constraints, temp):
     origSat = tester(guess, constraints)
-   
-    a = random.randint(0,len(guess)-1)
-    b = random.randint(0,len(guess)-1)
-
-    satisfiedAfterSwapping = swapTest(guess, constraints, a, b)
-
-    if satisfiedAfterSwapping > origSat:
-	guess[a], guess[b] = guess[b], guess[a]
-	print(tester(guess, constraints), temp[0])
-	if temp[0] > .1:
-            temp[0] *= .999
-	else:
-	    temp[0] = .3
-        #temp[0] = (len(constraints) - tester(guess, constraints))*1.0/len(constraints)
-		
-    else:
-	prob = exp((satisfiedAfterSwapping - origSat) * 1.0 / temp[0])
-	x = random.random()
-	if x < prob:
-	    guess[a], guess[b] = guess[b], guess[a]
-            print(tester(guess, constraints), temp[0])	
-	    if temp[0] > .1:
-                temp[0] *= .999
-	    else:
+    #a = random.randint(0,len(guess)-1)
+    #b = random.randint(0,len(guess)-1)
+    ###################
+    aDict = {}
+    aList = []
+    for i in range (4):
+        a = random.randint(0,len(guess)-1)
+        b = random.randint(0,len(guess)-1)
+        aDict[(a,b)] = swapTest(guess, constraints, a, b)
+    for key, value in sorted(iter(aDict.items()), key=lambda k_v1: (k_v1[1],k_v1[0]), reverse = True):
+        if value > origSat:
+            guess[key[0]], guess[key[1]] = guess[key[1]], guess[key[0]]
+            print(tester(guess, constraints), temp[0])
+            if temp[0] > .1:
+                temp[0] *= .998
+            else:
                 temp[0] = .3
-	    #temp[0] = (len(constraints) - tester(guess, constraints))*1.0/len(constraints)
-	    
-	else:
-	    print("-")
-    return tester(guess, constraints)
-    
+            #temp[0] = (len(constraints) - tester(guess, constraints))*1.0/len(constraints)
+
+        else:
+            prob = exp((value - origSat) * 0.99 / temp[0])
+            x = random.random()
+            if x < prob:
+                guess[key[0]], guess[key[1]] = guess[key[1]], guess[key[0]]
+                print(tester(guess, constraints), temp[0])
+                if temp[0] > .1:
+                    temp[0] *= .998
+                else:
+                    temp[0] = .3
+                #temp[0] = (len(constraints) - tester(guess, constraints))*1.0/len(constraints)
+            else:
+                print("-")
+        return tester(guess, constraints)
+
+
+
+#####################
+
+
 
 
 def getWizzNames(constraints, numNames):
@@ -98,8 +106,8 @@ def startingOrder(inThird):
     a = []
     b = []
     for key, value in sorted(iter(inThird.items()), key=lambda k_v1: (k_v1[1],k_v1[0])):
-	a.append(key)
-	temp = b
+        a.append(key)
+        temp = b
         b = a
         a = temp
     b.reverse()
@@ -113,15 +121,15 @@ def main(fileName):
     #ordering = []
     wizzNames = getWizzNames(constraints, numNames)
     inThird = getThirds(constraints, wizzNames)
-    
+
     ret = startingOrder(inThird)
     for _ in range(2):
-	print(loopOnce(ret, constraints, wizzNames))
+        print(loopOnce(ret, constraints, wizzNames))
     temp = []
-    temp.append(1)
+    temp.append(.5)
     while loopWithProb(ret, constraints, temp) < len(constraints):
-	pass
-    
+        pass
+
 
     print(ret)
     #print("--- %s seconds ---" % (time.time() - start_time))
