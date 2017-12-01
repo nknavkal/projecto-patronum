@@ -45,16 +45,16 @@ def loopOnce(guess, constraints, wizzNames):
 
 def swapTest(guess, constraints, i, j):
     guess[j], guess[i] = guess[i], guess[j]
-    k = tester(guess, constraints)
+    k = len(constraints) - len(tester(guess, constraints))
     guess[j], guess[i] = guess[i], guess[j]
     return k
 
 def loopWithProb(guess, constraints, temp):
-    origSat = tester(guess, constraints)
+    unSat = tester(guess, constraints)
     #a = random.randint(0,len(guess)-1)
     #b = random.randint(0,len(guess)-1)
     ###################
-    aDict = {}
+    unsat_cho
     aList = []
     for i in range (4):
         a = random.randint(0,len(guess)-1)
@@ -133,13 +133,14 @@ def main(fileName):
 
     print(ret)
     #print("--- %s seconds ---" % (time.time() - start_time))
-    print((tester(ret, safety))) 
+    print((tester(ret, safety)))
 
 
 
 def tester(guess, constraints):
     #guess is an array
     satisfied = 0
+    unsatList = []
     for constraint in constraints:
         first = constraint[0]
         second = constraint[1]
@@ -148,4 +149,7 @@ def tester(guess, constraints):
         upper = max(guess.index(first), guess.index(second))
         if guess.index(third) < lower or guess.index(third) > upper:
             satisfied += 1
-    return satisfied
+        else:
+            unsatList += constraint
+    print(satisfied)
+    return unsatList
