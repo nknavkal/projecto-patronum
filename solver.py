@@ -127,11 +127,10 @@ def loopWithProb(guess, constraints, temp):
     value = adict[key]
     guess[key[0]], guess[key[1]] = guess[key[1]], guess[key[0]]
     print(tester(guess, constraints), temp[0])
-    if temp[0] > .00001:
-        temp[0] *= .999
+    if temp[0] > .01:
+	temp[0] *= .999
     else:
-        temp[0] = .3
-        ######################
+	temp[0] = .2
     return tester(guess, constraints)
 
 def makeProbs(aDict):
