@@ -127,7 +127,7 @@ def loopWithProb(guess, constraints, temp):
     value = adict[key]
     guess[key[0]], guess[key[1]] = guess[key[1]], guess[key[0]]
     print(tester(guess, constraints), temp[0])
-    if temp[0] > .03:
+    if temp[0] > .00001:
         temp[0] *= .999
     else:
         temp[0] = .3
@@ -245,10 +245,23 @@ def solve(num_wizards, num_constraints, wizards, constraints):
         An array of wizard names in the ordering your algorithm returns
     """
     ret = np.random.choice(wizards, num_wizards, False).tolist()
+    loopOnce(ret, constraints, wizards)
     temp = []
-    temp.append(.5)
+    temp.append(.3)
+    start_time = time.time()
     while loopWithProb(ret, constraints, temp) < len(constraints):
         pass
+        # this was to add a little more randomness
+        # if time.time() - start_time > 60:
+        #     a = random.randint(0, num_wizards)
+        #     b = random.randint(0, num_wizards)
+        #     c = random.randint(0, num_wizards)
+        #     d = random.randint(0, num_wizards)
+        #     e = random.randint(0, num_wizards)
+        #     f = random.randint(0, num_wizards)
+        #     ret[a], ret[b] = ret[b], ret[a]
+        #     ret[c], ret[d] = ret[d], ret[c]
+        #     ret[e], ret[f] = ret[f], ret[e]
     print(tester(ret, constraints))
     return ret
 
