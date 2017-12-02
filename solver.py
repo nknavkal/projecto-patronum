@@ -6,39 +6,24 @@ import numpy as np
 ======================================================================
 """
 import random
-from math import *
 from datetime import datetime
-import sys
-import glob
-import errno
-import time
-import os
+
 random.seed(datetime.now())
-def readFile(inputFile):
-    fileobj = open(inputFile, "r")
-    a = list(fileobj)
-    numNames = int(a[0].split()[0])
-    constraints = []
-    for i in a[2:]:
-        constraints.append(tuple(i.split()[:3]))
-    return constraints, numNames
-    #return(makeOutsidePairs(numNames, constraints))
+
 
 def alphaTup(string1, string2):
     return tuple([min(string1, string2), max(string1, string2)])
 
-def getThirds(constraints, wizzNames):
-    appearsInThird = {}
+def numAppears(constraints, wizzNames):
+    appearsInPair = {}
     for name in wizzNames:
-        appearsInThird[name] = 0
+        appearsInPair[name] = 0
     for constraint in constraints:
-        #switching to inPair
-        appearsInThird[constraint[0]] += 1
-        appearsInThird[constraint[1]] += 1
-        #appearsInThird[constraint[2]] += 1
-    return appearsInThird
+        appearsInPair[constraint[0]] += 1
+        appearsInPair[constraint[1]] += 1
+    return appearsInPair
 
-def loopOnce(guess, constraints, wizzNames):
+def swapAll(guess, constraints, wizzNames):
     bestCorrect = tester(guess, constraints)
     j = 0
     for i in wizzNames:
@@ -64,143 +49,53 @@ def swapTest(guess, constraints, i, j):
     guess[j], guess[i] = guess[i], guess[j]
     return k
 
-def loopWithProb(guess, constraints, temp):
-    origSat = tester(guess, constraints)
-    #a = random.randint(0,len(guess)-1)
-    #b = random.randint(0,len(guess)-1)
-    ###################
-    aDict = {}
-    aList = []
-    for i in range (4):
-        a = random.randint(0,len(guess)-1)
-        b = random.randint(0,len(guess)-1)
-        aDict[(a,b)] = swapTest(guess, constraints, a, b)
-    for key, value in sorted(iter(aDict.items()), key=lambda k_v1: (k_v1[1],k_v1[0]), reverse = True):
-        if value > origSat:
-            guess[key[0]], guess[key[1]] = guess[key[1]], guess[key[0]]
-            print(tester(guess, constraints), temp[0])
-            if temp[0] > .1:
-                temp[0] *= .998
-            else:
-                temp[0] = .3
-            #temp[0] = (len(constraints) - tester(guess, constraints))*1.0/len(constraints)
+def getOptAndSubOpt(guess, constraints, chosenCons):
+    a = guess.index(chosenCons[0])
+    b = guess.index(chosenCons[1])
+    c = guess.index(chosenCons[2])
 
-        else:
-            prob = exp((value - origSat) * 0.99 / temp[0])
-            x = random.random()
-            if x < prob:
-                guess[key[0]], guess[key[1]] = guess[key[1]], guess[key[0]]
-                print(tester(guess, constraints), temp[0])
-                if temp[0] > .1:
-                    temp[0] *= .998
-                else:
-                    temp[0] = .3
-                #temp[0] = (len(constraints) - tester(guess, constraints))*1.0/len(constraints)
-            else:
-                print("-")
-        return tester(guess, constraints)
-
-
-
-#####################
-def loopWithProb(guess, constraints, temp):
-    origSat = tester(guess, constraints)
-    #a = random.randint(0,len(guess)-1)
-    #b = random.randint(0,len(guess)-1)
-    ###################
-    unsatSet = testUnsat(guess, constraints)
-    sampleUnsat = random.choice(unsatSet)
-    a, b, c = guess.index(sampleUnsat[0]), guess.index(sampleUnsat[1]), guess.index(sampleUnsat[2])
-    adict = {}
-    adict[(c, a)] = swapTest(guess, constraints, c, a)
-    adict[(c, b)] = swapTest(guess, constraints, c, b)
-    if adict[(c, a)] > adict[(c, b)]:
+    caSatisfies = swapTest(guess, constraints, c, a)
+    cbSatisfies = swapTest(guess, constraints, c, b)
+    if caSatisfies > cbSatisfies:
         optimal, suboptimal = (c, a), (c, b)
     else:
         optimal, suboptimal = (c, b), (c, a)
-    #aList = [(c, a), (c, b)]
+
+    return optimal, suboptimal
+
+
+def swapWithProb(guess, constraints, temp):
+    origSat = tester(guess, constraints)
+
+    unsatSet = getUnsat(guess, constraints)
+    unsatToSwap = random.choice(unsatSet)
+    
+    optimal, suboptimal = getOptAndSubOpt(guess, constraints, unsatToSwap)
+
     if random.random() < temp[0]:
         key = suboptimal
     else:
         key = optimal
-        #key = aList[1]
-    value = adict[key]
+
     guess[key[0]], guess[key[1]] = guess[key[1]], guess[key[0]]
     print(tester(guess, constraints), temp[0])
-    if temp[0] > .01:
-	temp[0] *= .999
+    if temp[0] > .0005:
+	   temp[0] *= .999
     else:
-	temp[0] = .2
+	   temp[0] = .04
     return tester(guess, constraints)
 
-def makeProbs(aDict):
-    sum = 0
-    min = 10000000000
-    probDict = {}
-    for k, v in aDict.items():
-        sum += v
-        if v < min:
-            min = v
-    for k, v in aDict.items():
-        probDict[k] = pow((v + min + 1.0) / (sum + min + 1), 2)
-    return probDict
 
-
-def getWizzNames(constraints, numNames):
-    nameSet = set()
-    for cons in constraints:
-        nameSet.add(cons[0])
-        nameSet.add(cons[1])
-        nameSet.add(cons[2])
-        if len(nameSet) == numNames:
-            break
-    return nameSet
-
-def startingOrder(inThird):
+def startingOrder(numAppears):
     a = []
     b = []
-    for key, value in sorted(iter(inThird.items()), key=lambda k_v1: (k_v1[1],k_v1[0])):
+    for key, value in sorted(iter(numAppears.items()), key=lambda k_v1: (k_v1[1],k_v1[0])):
         a.append(key)
         temp = b
         b = a
         a = temp
     b.reverse()
     return a + b
-
-def megaMain(path):
-    #path = '/home/projecto-patronum/phase2_inputs/inputs20/*.in'
-    #iles = os.listdir(path)
-    for name in os.listdir(path): # 'file' is a builtin type, 'name' is a less-ambiguous variable name.
-        #start_time = time.time()
-        print(path + name)
-        main(path + name)
-        print("--- %s seconds ---" % (time.time()))
-    print("")
-
-def main(fileName):
-    start_time = time.time()
-    constraints, numNames = readFile(fileName)
-    safety = constraints[:]
-    ret = 0
-    #ordering = []
-    wizzNames = getWizzNames(constraints, numNames)
-    inThird = getThirds(constraints, wizzNames)
-
-    ret = startingOrder(inThird)
-    for _ in range(2):
-        print(loopOnce(ret, constraints, wizzNames))
-    temp = []
-    temp.append(.5)
-    while loopWithProb(ret, constraints, temp) < len(constraints):
-        pass
-
-
-    print(ret)
-    print("--- %s seconds ---" % (time.time() - start_time))
-    print((tester(ret, safety)))
-
-
-
 
 def tester(guess, constraints):
     #guess is an array
@@ -215,7 +110,7 @@ def tester(guess, constraints):
             satisfied += 1
     return satisfied
 
-def testUnsat(guess, constraints):
+def getUnsat(guess, constraints):
     passed = []
     failed = []
     for constraint in constraints:
@@ -243,24 +138,12 @@ def solve(num_wizards, num_constraints, wizards, constraints):
     Output:
         An array of wizard names in the ordering your algorithm returns
     """
-    ret = np.random.choice(wizards, num_wizards, False).tolist()
-    loopOnce(ret, constraints, wizards)
-    temp = []
-    temp.append(.3)
-    start_time = time.time()
-    while loopWithProb(ret, constraints, temp) < len(constraints):
+    ret = startingOrder(numAppears(constraints, wizards))
+    swapAll(ret, constraints, wizards)
+    temp = [.3]
+    while swapWithProb(ret, constraints, temp) < len(constraints):
         pass
-        # this was to add a little more randomness
-        # if time.time() - start_time > 60:
-        #     a = random.randint(0, num_wizards)
-        #     b = random.randint(0, num_wizards)
-        #     c = random.randint(0, num_wizards)
-        #     d = random.randint(0, num_wizards)
-        #     e = random.randint(0, num_wizards)
-        #     f = random.randint(0, num_wizards)
-        #     ret[a], ret[b] = ret[b], ret[a]
-        #     ret[c], ret[d] = ret[d], ret[c]
-        #     ret[e], ret[f] = ret[f], ret[e]
+
     print(tester(ret, constraints))
     return ret
 
